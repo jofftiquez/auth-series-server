@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/jofftiquez/auth-series-server.git"
+    "url": "git@github.com:jofftiquez/auth-series-server.git"
   },
   "author": "Jofferson Tiquez",
   "license": "MIT",
