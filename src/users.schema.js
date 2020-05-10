@@ -1,18 +1,16 @@
 import mongoose from 'mongoose';
 
 const UserSchema = mongoose.Schema({
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
   username: {
     type: String,
-    required: true
+    required: true,
+    index: true,
+    unique: true
   },
   password: {
     type: String,
     required: true
   }
-});
+}, { timestamps: true });
 
 export default mongoose.model('Users', UserSchema);
