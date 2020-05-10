@@ -23,7 +23,7 @@ app.post('/users', async (req, res) => {
       password: hashedPass
     });
     await user.save();
-    res.status(201).send();
+    res.status(200).send('User created!');
   } catch (e) {
     if (e.code === 11000) {
       res.status(500).send(e);
