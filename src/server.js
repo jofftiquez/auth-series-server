@@ -37,13 +37,22 @@ app.post('/users', async (req, res) => {
 app.post('/authenticate', async (req, res) => {
   try {
     const { username, password } = req.body;
-    const data = await User.findOne({ username }).lean();
-    if (!data) throw ({ code: 403, message: 'Forbidden - username or password is incorrect!' });
-    if (await bcrypt.compare(password, data.password)) {
-      delete data.password;
-      const accessToken = jwt.sign({ username: data.username, uid: data._id }, SECRET);
+    const user = await User.findOne({ username }).lean();
+
+    if (!user) throw ({ code: 403, message: 'Forbidden - username or password is incorrect!' });
+    
+    if (await bcrypt.compare(password, user.password)) {
+      delete user.password;
+      const accessToken = jwt.sign(
+        // data
+        { username: user.username, uid: user._id },
+        // secret
+        SECRET,
+        // options
+        { expiresIn: '10s' }
+      );
       res.status(200).send({
-        ...data,
+        ...user,
         accessToken
       });
     } else {
